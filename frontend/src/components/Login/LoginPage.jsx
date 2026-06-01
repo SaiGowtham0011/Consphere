@@ -12,14 +12,14 @@ function Login(){
                         <input id='user-box' placeholder="enter username"></input>
                     </div>
                     <div className='password-input'>
-                        <input id='pass-box' placeholder="enter password"></input>
+                        <input id='pass-box' type='password' placeholder="enter password"></input>
                     </div>
                     <div className='login-btn'>
                         <button>Login</button>
                     </div>
                     <div className='newAcc'>
                         <p>Didn't have an account ?</p>
-                        <Link to="/signin">Sign In</Link>
+                        <Link to="/signup">Sign Up</Link>
                     </div>
                 </div>
             </div>
