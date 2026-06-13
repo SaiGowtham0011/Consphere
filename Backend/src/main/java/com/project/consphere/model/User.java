@@ -21,6 +21,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String mobileNumber;
+    private String profilePicURL;
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
