@@ -58,8 +58,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Comment> getAllCommentsByPostId(Long postId){
-        List<Comment> comments = commentRepository.findAllByPostId(postId);
+    public List<Comment> getAllCommentsByPost(Post post){
+        List<Comment> comments = commentRepository.findAllByPost(post);
         if(comments.isEmpty()){
             System.out.println("Cannot find any comments");
         }

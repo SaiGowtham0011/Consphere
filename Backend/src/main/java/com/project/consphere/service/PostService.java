@@ -14,6 +14,6 @@ public interface PostService {
 
     List<Post> getFeedByUserId(User follower);
     List<Post> findAllPostsByUserId(Long userId);
-    List<Comment> getAllCommentsByPostId(Long postId);
+    List<Comment> getAllCommentsByPost(Post post);
     List<Like> getAllLikesByPost(Post post);
 }

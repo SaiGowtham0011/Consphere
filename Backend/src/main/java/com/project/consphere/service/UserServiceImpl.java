@@ -3,12 +3,16 @@ package com.project.consphere.service;
 import com.project.consphere.model.User;
 import com.project.consphere.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User findUserByUsername(String username) {
@@ -50,5 +54,11 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(()->new RuntimeException("Username not found with "+user.getUsername()));
         userRepository.delete(existing);
         return existing;
+    }
+
+    @Override
+    public User register(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 }
