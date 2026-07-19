@@ -1,5 +1,6 @@
 package com.project.consphere.service;
 
+import com.project.consphere.dto.RegisterRequest;
 import com.project.consphere.model.User;
 import com.project.consphere.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public User register(RegisterRequest request){
+        if(userRepository.existsByUsername(request.getUsername())){
+            throw new RuntimeException("Username already exists");
+        }
+        if(userRepository.existsByEmail(request.getEmail())){
+            throw new RuntimeException("Email already exists");
+        }
+        if(request.getPassword()==null || !request.getPassword().equals(request.getConfirmPassword())){
+            throw new RuntimeException("Passwords do not match");
+        }
+        User user = new User();
+
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setUsername(request.getUsername());
+        user.setMobileNumber(request.getMobileNumber());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         return userRepository.save(user);
     }
 }

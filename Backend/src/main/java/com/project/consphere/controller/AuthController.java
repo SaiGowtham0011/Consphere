@@ -1,6 +1,8 @@
 package com.project.consphere.controller;
 
 import com.project.consphere.config.JwtService;
+import com.project.consphere.dto.LoginRequest;
+import com.project.consphere.dto.RegisterRequest;
 import com.project.consphere.model.User;
 import com.project.consphere.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,13 @@ public class AuthController {
     private JwtService jwtService;
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return userService.register(user);
+    public User register(@RequestBody RegisterRequest request) {
+
+        return userService.register(request);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
+    public String login(@RequestBody LoginRequest user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
         );
