@@ -1,9 +1,12 @@
 package com.project.consphere.service;
 
 import com.project.consphere.dto.RegisterRequest;
+import com.project.consphere.dto.UpdateUserRequest;
 import com.project.consphere.model.User;
 import com.project.consphere.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,30 +32,34 @@ public class UserServiceImpl implements UserService {
         return existing;
     }
 
-    @Override
-    public User addUser(User user){
-        return userRepository.save(user);
-    }
 
     @Override
-    public User updateUser(String username, User user){
-        User existing = userRepository.findByUsername(username)
-                .orElseThrow(()->new RuntimeException("Username not found with "+username));
-        existing.setUsername(user.getUsername());
-        existing.setEmail(user.getEmail());
-        existing.setPassword(user.getPassword());
-        existing.setMobileNumber(user.getMobileNumber());
-        existing.setProfilePicURL(user.getProfilePicURL());
-        existing.setFirstName(user.getFirstName());
-        existing.setLastName(user.getLastName());
+    public User updateUser(UpdateUserRequest request){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+
+        User existing = userRepository.findByUsername(currentUsername)
+                .orElseThrow(()->new RuntimeException("Username not found with "+currentUsername));
+        if(userRepository.existsByUsername(request.getUsername())){
+            throw new RuntimeException("Username is already in use");
+        }
+
+        existing.setUsername(request.getUsername());
+        existing.setEmail(request.getEmail());
+        existing.setMobileNumber(request.getMobileNumber());
+        existing.setProfilePicURL(request.getProfilePicURL());
+        existing.setFirstName(request.getFirstName());
+        existing.setLastName(request.getLastName());
 
         return userRepository.save(existing);
     }
 
     @Override
-    public User deleteUser(User user){
-        User existing = userRepository.findByUsername(user.getUsername())
-                .orElseThrow(()->new RuntimeException("Username not found with "+user.getUsername()));
+    public User deleteUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        User existing = userRepository.findByUsername(currentUsername)
+                .orElseThrow(()->new RuntimeException("Username not found with "+currentUsername));
         userRepository.delete(existing);
         return existing;
     }
