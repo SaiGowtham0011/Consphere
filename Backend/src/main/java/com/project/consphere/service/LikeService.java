@@ -1,18 +1,12 @@
 package com.project.consphere.service;
 
-import com.project.consphere.model.Like;
-import com.project.consphere.model.Post;
-import com.project.consphere.model.User;
-
-import java.util.List;
+import com.project.consphere.dto.LikeResponse;
 
 public interface LikeService {
-    Like addLike(Like like);
 
-    Like deleteLike(Like like);
+    LikeResponse likePost(Long postId);
 
-    List<User> getUsersWhoLikedPost(Post post);
+    LikeResponse unlikePost(Long postId);
 
-    long likesCount(Post post);
-
+    LikeResponse getLikeStatus(Long postId);
 }

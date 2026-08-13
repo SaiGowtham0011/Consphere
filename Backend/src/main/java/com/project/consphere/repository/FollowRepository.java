@@ -3,16 +3,23 @@ package com.project.consphere.repository;
 import com.project.consphere.model.Follow;
 import com.project.consphere.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface FollowRepository extends JpaRepository<Follow, Long> {
-    //This finds the users whom are followed by the "User follower"
+
+    boolean existsByFollowerAndFollowing(User follower, User following);
+
+    Optional<Follow> findByFollowerAndFollowing(User follower, User following);
+
     List<Follow> findByFollower(User follower);
 
-    //This finds the users whom are following "User follower"
     List<Follow> findByFollowing(User following);
 
-    //check whether following or not before follow/unfollow
-    boolean existsByFollowingAndFollower(User following, User follower);
+    long countByFollower(User follower);
+
+    long countByFollowing(User following);
 }

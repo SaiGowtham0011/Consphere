@@ -1,14 +1,18 @@
 package com.project.consphere.service;
 
-import com.project.consphere.model.Comment;
-import com.project.consphere.model.Post;
+import com.project.consphere.dto.CommentResponse;
+import com.project.consphere.dto.CreateCommentRequest;
+import com.project.consphere.dto.UpdateCommentRequest;
 
 import java.util.List;
 
 public interface CommentService {
-    Comment addComment(Comment comment);
 
-    Comment deleteComment(Comment comment);
+    CommentResponse addComment(Long postId, CreateCommentRequest request);
 
-    List<Comment> findCommentsByPost(Post post);
+    List<CommentResponse> getCommentsByPost(Long postId);
+
+    CommentResponse updateComment(Long commentId, UpdateCommentRequest request);
+
+    void deleteComment(Long commentId);
 }

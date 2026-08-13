@@ -1,0 +1,90 @@
+/* Global Vanilla CSS - CONSPHERE */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Light Theme Variables - Crisp White Background */
+  --bg-main: #ffffff;
+  --bg-card: #ffffff;
+  --border-color: #e2e8f0;
+  --text-main: #0f172a;
+  --text-sub: #475569;
+  --text-muted: #64748b;
+  --primary-purple: #6366f1;
+  --primary-purple-hover: #4f46e5;
+  --input-bg: #f8fafc;
+  --hover-bg: #f1f5f9;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+html.dark {
+  /* Dark Theme Variables */
+  --bg-main: #0b0f19;
+  --bg-card: #131b2e;
+  --border-color: #1e293b;
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --text-muted: #64748b;
+  --primary-purple: #6366f1;
+  --primary-purple-hover: #4f46e5;
+  --input-bg: #0f172a;
+  --hover-bg: #1e293b;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-main) !important;
+  color: var(--text-main);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* Reusable App Card */
+.app-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Tag Color Classes */
+.tag-green { color: #10b981; }
+.tag-cyan { color: #06b6d4; }
+.tag-pink { color: #ec4899; }
+.tag-orange { color: #f97316; }
+.tag-blue { color: #3b82f6; }
+.tag-purple { color: #a855f7; }
+.tag-violet { color: #8b5cf6; }
+.tag-amber { color: #f59e0b; }

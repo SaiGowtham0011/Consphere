@@ -1,18 +1,15 @@
 package com.project.consphere.controller;
 
-import com.project.consphere.config.JwtService;
 import com.project.consphere.dto.LoginRequest;
+import com.project.consphere.dto.LoginResponse;
 import com.project.consphere.dto.RegisterRequest;
-import com.project.consphere.model.User;
+import com.project.consphere.dto.UserResponse;
 import com.project.consphere.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -21,27 +18,15 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtService jwtService;
-
     @PostMapping("/register")
-    public User register(@RequestBody RegisterRequest request) {
-
-        return userService.register(request);
+    public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
+        UserResponse response = userService.register(request);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest user) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-        );
-        if(authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getUsername());
-        }
-        throw new RuntimeException("Invalid username or password");
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+        LoginResponse response = userService.login(request);
+        return ResponseEntity.ok(response);
     }
-
 }

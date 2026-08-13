@@ -1,13 +1,19 @@
 package com.project.consphere.service;
 
-import com.project.consphere.dto.RegisterRequest;
-import com.project.consphere.dto.UpdateUserRequest;
+import com.project.consphere.dto.*;
 import com.project.consphere.model.User;
 
 public interface UserService {
-    User findUserByUsername(String username);
-    User findUserByEmail(String email);
-    User updateUser(UpdateUserRequest request);
-    User deleteUser();
-    User register(RegisterRequest request);
+
+    UserResponse register(RegisterRequest request);
+
+    LoginResponse login(LoginRequest request);
+
+    UserResponse getCurrentUserProfile();
+
+    UserResponse updateUserProfile(UpdateUserRequest request);
+
+    UserProfileResponse getUserProfileByUsername(String username);
+
+    User getCurrentUser();
 }
